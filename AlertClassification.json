@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "updated": "2026-03-24",
+  "whitelist": {
+    "exact": [
+      {"source": "blackpoint", "alert_type": "Login from Unapproved Country", "severity_override": "critical", "_comment": "Always P1"},
+      {"source": "blackpoint", "alert_type": "Isolate Host", "severity_override": "critical"},
+      {"source": "blackpoint", "alert_type": "Impossible Travel"},
+      {"source": "blackpoint", "alert_type": "User Deleted"},
+      {"source": "blackpoint", "alert_type": "Admin Consented to Unverified Enterprise App"},
+      {"source": "blackpoint", "alert_type": "Block IP"},
+      {"source": "blackpoint", "alert_type": "Lockout Account"},
+      {"source": "blackpoint", "alert_type": "Report"}
+    ],
+    "contains": [
+      {"field": "message", "pattern": "disk failure"},
+      {"field": "message", "pattern": "RAID degraded"},
+      {"field": "alert_type", "pattern": "ransomware", "severity_override": "critical"},
+      {"field": "alert_type", "pattern": "wan_down"}
+    ]
+  },
+  "blacklist": {
+    "exact": [
+      {"source": "blackpoint", "alert_type": "Ignore", "_comment": "BP explicitly marked ignore"},
+      {"source": "cipp", "alert_type": "UserLoggedIn", "_comment": "Normal login noise"}
+    ],
+    "contains": [
+      {"field": "alert_type", "pattern": "test alert"},
+      {"field": "message", "pattern": "scheduled maintenance"},
+      {"field": "message", "pattern": "backup completed successfully"},
+      {"field": "alert_type", "pattern": "informational"}
+    ]
+  }
+}
