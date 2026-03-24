@@ -27,8 +27,9 @@
     "contains": [
       {"field": "alert_type", "pattern": "test alert"},
       {"field": "message", "pattern": "scheduled maintenance"},
+      {"field": "message", "pattern": "Missing M365 Licenses / Alignment Data"},
       {"field": "message", "pattern": "backup completed successfully"},
-      {"field": "alert_type", "pattern": "informational"}
+      {"field": "alert_type", "pattern": "informational"} 
     ]
   }
 }
