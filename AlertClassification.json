@@ -67,6 +67,11 @@
         "_comment": "BP explicitly marked ignore"
       },
       {
+        "source": "blackpoint",
+        "alert_type": "Login from New Device and IP",
+        "_comment": "Simple a new device or IP address, no other suspicious activity, normal noise"
+      },
+      {
         "source": "cipp",
         "alert_type": "MultiTenantAlert",
         "_comment": "Could not get compliance state for tenants due to missing licensing."
