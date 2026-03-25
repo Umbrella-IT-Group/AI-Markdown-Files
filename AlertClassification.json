@@ -88,6 +88,11 @@
       },
       {
         "source": "cipp",
+        "alert_type": "Get-CIPPAlertVppTokenExpiry",
+        "_comment": "Normal VPP Token Expiry job runner noise."
+      },
+      {
+        "source": "cipp",
         "alert_type": "Get-CIPPAlertDeviceCompliance",
         "_comment": "Normal compliance job runner noise."
       },
