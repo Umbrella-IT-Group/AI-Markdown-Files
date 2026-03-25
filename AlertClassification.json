@@ -1,36 +1,149 @@
 {
-  "version": 1,
-  "updated": "2026-03-24",
+  "version": 1.2,
+  "updated": "2026-03-25",
   "whitelist": {
     "exact": [
-      {"source": "blackpoint", "alert_type": "Login from Unapproved Country", "severity_override": "critical", "_comment": "Always P1"},
-      {"source": "blackpoint", "alert_type": "Isolate Host", "severity_override": "critical"},
-      {"source": "blackpoint", "alert_type": "Impossible Travel"},
-      {"source": "blackpoint", "alert_type": "User Deleted"},
-      {"source": "blackpoint", "alert_type": "Admin Consented to Unverified Enterprise App"},
-      {"source": "blackpoint", "alert_type": "Block IP"},
-      {"source": "blackpoint", "alert_type": "Lockout Account"},
-      {"source": "blackpoint", "alert_type": "Report"}
+      {
+        "source": "blackpoint",
+        "alert_type": "Login from Unapproved Country",
+        "severity_override": "critical",
+        "_comment": "Always P1"
+      },
+      {
+        "source": "blackpoint",
+        "alert_type": "Isolate Host",
+        "severity_override": "critical"
+      },
+      {
+        "source": "blackpoint",
+        "alert_type": "Impossible Travel"
+      },
+      {
+        "source": "blackpoint",
+        "alert_type": "User Deleted"
+      },
+      {
+        "source": "blackpoint",
+        "alert_type": "Admin Consented to Unverified Enterprise App"
+      },
+      {
+        "source": "blackpoint",
+        "alert_type": "Block IP"
+      },
+      {
+        "source": "blackpoint",
+        "alert_type": "Lockout Account"
+      },
+      {
+        "source": "blackpoint",
+        "alert_type": "Report"
+      }
     ],
     "contains": [
-      {"field": "message", "pattern": "disk failure"},
-      {"field": "message", "pattern": "RAID degraded"},
-      {"field": "alert_type", "pattern": "ransomware", "severity_override": "critical"},
-      {"field": "alert_type", "pattern": "wan_down"}
+      {
+        "field": "message",
+        "pattern": "disk failure"
+      },
+      {
+        "field": "message",
+        "pattern": "RAID degraded"
+      },
+      {
+        "field": "alert_type",
+        "pattern": "ransomware",
+        "severity_override": "critical"
+      },
+      {
+        "field": "alert_type",
+        "pattern": "wan_down"
+      }
     ]
   },
   "blacklist": {
     "exact": [
-      {"source": "blackpoint", "alert_type": "Ignore", "_comment": "BP explicitly marked ignore"},
-      {"source": "cipp", "alert_type": "UserLoggedIn", "_comment": "Normal login noise"}
+      {
+        "source": "blackpoint",
+        "alert_type": "Ignore",
+        "_comment": "BP explicitly marked ignore"
+      },
+      {
+        "source": "cipp",
+        "alert_type": "MultiTenantAlert",
+        "_comment": "Could not get compliance state for tenants due to missing licensing."
+      },
+      {
+        "source": "cipp",
+        "alert_type": "UnknownCIPP",
+        "_comment": "Most likely Standards API job runner noise, but could be other unknown noise. Needs investigation if we see this often or with high severity."
+      },
+      {
+        "source": "cipp",
+        "alert_type": "UserLoggedIn",
+        "_comment": "Normal login noise"
+      },
+      {
+        "source": "cipp",
+        "alert_type": "Get-CIPPAlertDeviceCompliance",
+        "_comment": "Normal compliance job runner noise."
+      },
+      {
+        "source": "cipp",
+        "alert_type": "Get-CIPPAlertDefenderIncidents",
+        "_comment": "Normal MDE job runner noise."
+      },
+      {
+        "source": "cipp",
+        "alert_type": "Update StsRefreshTokenValidFrom Timestamp.",
+        "_comment": "Normal Token Refresh job runner noise."
+      },
+      {
+        "source": "mailbox",
+        "alert_type": "High-severity alert: Malware Campaign Detected",
+        "_comment": "Microsoft Notification of auto-remediation action taken, no action needed from team"
+      },
+      {
+        "source": "mailbox",
+        "alert_type": "Malware Detected in your Message",
+        "_comment": "External Email blocked for malware, no action needed from team"
+      }
     ],
     "contains": [
-      {"field": "alert_type", "pattern": "test alert"},
-      {"field": "message", "pattern": "scheduled maintenance"},
-      {"field": "message", "pattern": "Missing M365 Licenses / Alignment Data"},
-      {"field": "message", "pattern": "SMTP AUTH usage"},
-      {"field": "message", "pattern": "backup completed successfully"},
-      {"field": "alert_type", "pattern": "informational"} 
+      {
+        "field": "alert_type",
+        "pattern": "test alert"
+      },
+      {
+        "field": "message",
+        "pattern": "important DSM update with critical fixes is available"
+      },
+      {
+        "field": "message",
+        "pattern": "scheduled maintenance"
+      },
+      {
+        "field": "message",
+        "pattern": "Missing M365 Licenses / Alignment Data"
+      },
+      {
+        "field": "message",
+        "pattern": "SMTP AUTH usage"
+      },
+      {
+        "field": "message",
+        "pattern": "backup completed successfully"
+      },
+      {
+        "field": "message",
+        "pattern": "Job successful"
+      },
+      {
+        "field": "message",
+        "pattern": "Sign in to the Microsoft 365 admin center to view your invoice."
+      },
+      {
+        "field": "alert_type",
+        "pattern": "informational"
+      }
     ]
   }
 }
