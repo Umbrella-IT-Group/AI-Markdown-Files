@@ -139,6 +139,10 @@
       },
       {
         "field": "message",
+        "pattern": "a user has logged on from a location you've set up to receive alerts for"
+      },
+      {
+        "field": "message",
         "pattern": "You can view, comment on, or merge this pull request"
       },
       {
