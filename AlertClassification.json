@@ -63,6 +63,26 @@
     "exact": [
       {
         "source": "blackpoint",
+        "alert_type": "Item Permanently Deleted",
+        "_comment": "Common noise for user file deletion actions in a shared mailbox or Teams environment. Unless we see this with other suspicious activity or from high-risk users, it's generally not actionable on its own."
+      },
+      {
+        "source": "blackpoint",
+        "alert_type": "Email Impersonated",
+        "_comment": "Common noise for sending from a shared mailbox. Unless we see this with other suspicious activity or from high-risk users, it's generally not actionable on its own."
+      },
+      {
+        "source": "blackpoint",
+        "alert_type": "User Locked Out - Multiple Failed Logins",
+        "_comment": "Common noise from Azure Smart-Lockout, which locks accounts after multiple failed login attempts. These can be caused by users forgetting passwords, mistyping, or automated attacks. Unless we see this with other suspicious activity or from high-risk users, it's generally not actionable on its own."
+      },
+      {
+        "source": "blackpoint",
+        "alert_type": "Anonymous File Share Link Created",
+        "_comment": "Non-Critical alert for users sharing files via anonymous links. Noise unless we see this with other suspicious activity or from high-risk users."
+      },
+      {
+        "source": "blackpoint",
         "alert_type": "Ignore",
         "_comment": "BP explicitly marked ignore"
       },
@@ -136,6 +156,14 @@
       {
         "field": "alert_type",
         "pattern": "test alert"
+      },
+      {
+        "field": "alert_type",
+        "pattern": "new voicemail from"
+      },
+      {
+        "field": "customer_name",
+        "pattern": "Fr8 Solutions"
       },
       {
         "field": "message",
