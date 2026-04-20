@@ -68,6 +68,11 @@
       },
       {
         "source": "blackpoint",
+        "alert_type": "Role Assigned to User",
+        "_comment": "Common noise for admin tasks, especially with TechID Manager. Unless we see this with other suspicious activity or from high-risk users, it's generally not actionable on its own."
+      },
+      {
+        "source": "blackpoint",
         "alert_type": "Email Impersonated",
         "_comment": "Common noise for sending from a shared mailbox. Unless we see this with other suspicious activity or from high-risk users, it's generally not actionable on its own."
       },
@@ -115,6 +120,11 @@
         "source": "cipp",
         "alert_type": "Get-CIPPAlertDeviceCompliance",
         "_comment": "Normal compliance job runner noise."
+      },
+      {
+        "source": "cipp",
+        "alert_type": "Get-CIPPAlertOverusedLicenses",
+        "_comment": "Normal overused license job runner noise."
       },
       {
         "source": "cipp",
