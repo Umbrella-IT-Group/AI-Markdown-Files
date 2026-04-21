@@ -68,6 +68,11 @@
       },
       {
         "source": "blackpoint",
+        "alert_type": "Role Removed from User",
+        "_comment": "Common noise for admin tasks, especially with TechID Manager. Unless we see this with other suspicious activity or from high-risk users, it's generally not actionable on its own."
+      },
+      {
+        "source": "blackpoint",
         "alert_type": "Role Assigned to User",
         "_comment": "Common noise for admin tasks, especially with TechID Manager. Unless we see this with other suspicious activity or from high-risk users, it's generally not actionable on its own."
       },
@@ -163,6 +168,10 @@
       }
     ],
     "contains": [
+      {
+        "field": "alert_type",
+        "pattern": "PhishER"
+      },
       {
         "field": "alert_type",
         "pattern": "Welcome To Our Online Payments Portal"
