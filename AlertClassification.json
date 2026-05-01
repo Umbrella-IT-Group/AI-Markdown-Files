@@ -165,6 +165,11 @@
         "source": "mailbox",
         "alert_type": "Microsoft 365 Defender has detected a security threat",
         "_comment": "Generic Defender notification email. These duplicate the specific alert emails (e.g. phishing, malware) that are already blacklisted above. Two identical copies of ID6952 came through 30 sec apart on 2026-03-26. If Defender finds something truly novel, it will come through Blackpoint or CIPP, not this generic mailbox notification."
+      },
+      {
+        "source": "blackpoint",
+        "alert_type": "Unknown",
+        "_comment": "BlackPoint MdrReportToPartnerCustomerNotification events have no eventAction/eventName so the normalizer falls back to alert_type=Unknown. These are partner-notification wrappers, not actual threats \u2014 drop deterministically before AI triage."
       }
     ],
     "contains": [
