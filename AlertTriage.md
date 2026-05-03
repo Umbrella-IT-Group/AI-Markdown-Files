@@ -54,7 +54,8 @@ Reply with **only** valid JSON. No prose, no markdown fences.
     "section": "whitelist | blacklist",
     "type": "exact | contains",
     "rule": { "source": "...", "alert_type": "..." }
-  }
+  },
+  "triage_context": null
 }
 ```
 
@@ -67,6 +68,41 @@ Reply with **only** valid JSON. No prose, no markdown fences.
   Use `"type": "exact"` when `alert_type` is a stable identifier;
   use `"type": "contains"` when matching a substring of `alert_type`
   or `message` is more reliable.
+- `triage_context` is normally `null`. Populate only for the degraded-envelope rule below — see the next section.
+
+## Degraded envelopes — Alex review rule (overrides "lean to DROP")
+
+If the envelope is **missing more than ~50% of expected information** — that is, the upstream ALL Alerts Processing pipeline shipped you something thin enough that you cannot meaningfully decide what it means — do NOT blacklist it as noise. Token-burning AI guesses on garbage data are why the engineer added this rule.
+
+Concrete signals that an envelope is degraded:
+
+- `source` is `"unknown"` (not a known integration name like `blackpoint` / `cipp` / `synology` / `pax8` / `mailbox` / `unifi` / `meraki` / `datagate`).
+- `alert_type` is `"NormalizerError"`, `"Unknown"`, or empty.
+- `message` starts with `"Normalizer failed."` or is shorter than ~30 meaningful characters.
+- `customer_name` is empty AND there are no usable identifiers (no domains, hostnames, autotask_company_id) in `metadata` or `identifiers`.
+- The envelope carries `_envelope_quality.degraded === true`.
+
+If two or more of these signals fire (or `_envelope_quality.degraded` is explicitly true), output:
+
+```json
+{
+  "decision": "whitelist",
+  "confidence": 100,
+  "reasoning": "Envelope degraded — missing too much expected info. Routing to Alex for human review instead of token-burning a guess.",
+  "suggested_rule": null,
+  "triage_context": "ALEX REVIEW REQUIRED. The alert envelope arrived with insufficient information to triage automatically. Likely an upstream normalizer issue or a new alert format the pipeline doesn't yet handle. Investigate the source-side flow, fix the normalizer or add a classification rule, then close this ticket. Specific gaps in this alert: <list which fields were missing>."
+}
+```
+
+The downstream ticket-creation pipeline reads `triage_context` and:
+
+- Prefixes the ticket title with `[ALEX REVIEW]`.
+- Prepends the `triage_context` text to the description.
+- Looks up Alex Ivantsov's AutoTask resource and assigns the ticket to him.
+
+**Why this rule exists:** the AI classifier was previously dropping (`blacklist`) every envelope that arrived empty, including upstream pipeline errors that an operator should actually see. Dropping those gave Tara perfect-looking decisions but hid real bugs. The fix is to escalate degraded envelopes to a human instead of guessing.
+
+This rule **overrides** the "lean to DROP" default. Do NOT use it as an excuse to escalate everything — only fire it when 2+ of the signals above genuinely apply.
 
 ## Edge cases
 
@@ -75,6 +111,4 @@ Reply with **only** valid JSON. No prose, no markdown fences.
 - Alert that looks similar to an obvious blacklist pattern but the
   `alert_type` is slightly different: still `blacklist`, suggest a
   `contains` rule.
-- Empty / missing fields (`alert_type` is `Unknown`, message is
-  vacuous): `blacklist` — the ruleset should be catching these,
-  flag it via `suggested_rule`.
+- Alert is empty / vacuous BUT envelope is well-formed (known source, named customer, just nothing useful in `message`): still `blacklist` and `suggested_rule` to extend the ruleset. The Alex-review rule above is for the *envelope itself* being malformed, not for normal "low-content" alerts from a known source.
